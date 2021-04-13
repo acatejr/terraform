@@ -1,0 +1,9 @@
+*.bak
+.terraform
+.env
+variables.tf
+files/id_rsa.pub
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+outputs.tf
