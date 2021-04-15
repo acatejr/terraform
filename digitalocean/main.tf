@@ -6,16 +6,13 @@ terraform {
     }
   }
 }
-
 provider "digitalocean" {
     token = var.do_token
 }
-
 resource "digitalocean_ssh_key" "web" {
     name = "Web App SSH Key"
     public_key = file("${path.module}/files/id_rsa.pub")
 }
-
 resource "digitalocean_droplet" "web" {
     image  = "ubuntu-20-10-x64"
     name   = "web"
@@ -27,4 +24,10 @@ resource "digitalocean_droplet" "web" {
         digitalocean_ssh_key.web.id
     ]
     user_data = file("${path.module}/files/user-data.sh")
+}
+resource "digitalocean_project" "doproject" {
+  name = "DO Project"
+  description = "Project description"
+  environment = "Development"
+  resources = [ digitalocean_droplet.web.urn ]
 }
